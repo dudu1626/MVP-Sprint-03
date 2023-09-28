@@ -1,0 +1,103 @@
+drop col: IDADEMAE, ESCMAE, ESCMAE2010, SERIESCMAE, OCUPMAE, QTDFILVIVO, QTDFILMORT, GRAVIDEZ, SEMAGESTAC, GESTACAO, PARTO, OBITOPARTO, PESO, TPMORTEOCO, ACIDTRAB action: Drop
+drop col: OBITOGRAV,OBITOPUERP action: Drop
+drop col: TIPOBITO,ORIGEM action: Drop
+settype col: DTOBITO lockDataType: true type: String
+settype col: HORAOBITO lockDataType: true type: String
+columnbyexample columns: HORAOBITO value: CASE([ISNULL(HORAOBITO),NULL(),ISMISSING([HORAOBITO]),'',MERGE([SUBSTRING(HORAOBITO, 0, FINDNTH(HORAOBITO, /[0-9]/, 3, left, false)),':',SUBSTRING(HORAOBITO, 0, FINDNTH(HORAOBITO, /[0-9]/, 3, left, false))])]) exampleMappingId: 52265 as: 'HORAOBITO1'
+drop col: HORAOBITO action: Drop
+rename type: manual mapping: [HORAOBITO1,'HORAOBITO']
+columnbyexample columns: DTOBITO value: CASE([ISNULL(DTOBITO),NULL(),ISMISSING([DTOBITO]),'',MERGE([SUBSTRING(DTOBITO, 0, FINDNTH(DTOBITO, /[0-9]/, 3, left, false)),'-',SUBSTRING(DTOBITO, LEN(DTOBITO) - LEN(SUBSTITUTE(SUBSTRING(DTOBITO, FINDNTH(DTOBITO, /[A-Za-z0-9]/, 7, right, false), LEN(DTOBITO)), /[A-Za-z0-9]/, '', false, /^/)), FINDNTH(DTOBITO, /[A-Za-z0-9]/, 5, left, false)),'-',SUBSTRING(DTOBITO, LEN(DTOBITO) - LEN(SUBSTITUTE(SUBSTRING(DTOBITO, FINDNTH(DTOBITO, /[A-Za-z0-9]/, 4, left, false), LEN(DTOBITO)), /[A-Za-z0-9]/, '', false, /^/)), LEN(DTOBITO))])]) exampleMappingId: 52266 as: 'DTOBITO1'
+dateformat col: DTOBITO1 type: slashdate
+drop col: DTOBITO action: Drop
+rename type: manual mapping: [DTOBITO1,'DTOBITO']
+dateformat col: HORAOBITO type: custom format: 'HH:MM'
+columnbyexample columns: DTNASC value: CASE([ISNULL(DTNASC),NULL(),ISMISSING([DTNASC]),'',MERGE([SUBSTRING(DTNASC, 0, FINDNTH(DTNASC, /[0-9]/, 3, left, false)),'-',SUBSTRING(DTNASC, LEN(DTNASC) - LEN(SUBSTITUTE(SUBSTRING(DTNASC, FINDNTH(DTNASC, /[A-Za-z0-9]/, 7, right, false), LEN(DTNASC)), /[A-Za-z0-9]/, '', false, /^/)), FINDNTH(DTNASC, /[A-Za-z0-9]/, 5, left, false)),'-',SUBSTRING(DTNASC, LEN(DTNASC) - LEN(SUBSTITUTE(SUBSTRING(DTNASC, FINDNTH(DTNASC, /[A-Za-z0-9]/, 4, left, false), LEN(DTNASC)), /[A-Za-z0-9]/, '', false, /^/)), LEN(DTNASC))])]) exampleMappingId: 52267 as: 'DTNASC1'
+dateformat col: DTNASC1 type: slashdate
+drop col: DTNASC action: Drop
+rename type: manual mapping: [DTNASC1,'DTNASC']
+columnbyexample columns: CODMUNOCOR value: CASE([ISNULL(CODMUNOCOR),NULL(),ISMISSING([CODMUNOCOR]),'',SUBSTRING(CODMUNOCOR, 0, FINDNTH(CODMUNOCOR, /[0-9]/, 4, right, false))]) exampleMappingId: 52268 as: 'CODUFOCOR'
+settype col: IDADE lockDataType: true type: Integer
+columnbyexample columns: SEXO value: CASE([ISNULL(SEXO),NULL(),ISMISSING([SEXO]),'',CASE([SEXO == '1','masculino',SEXO == '2','feminino',NULL()])]) exampleMappingId: 52273 as: 'SEXONOME'
+drop col: SEXO action: Drop
+rename type: manual mapping: [SEXONOME,'SEXO']
+columnbyexample columns: RACACOR value: CASE([ISNULL(RACACOR),NULL(),ISMISSING([RACACOR]),'',CASE([RACACOR == '1', 'branca', RACACOR == '2', 'preta', RACACOR == '3', 'amarela', RACACOR == '4', 'parda', 'indigena'])]) exampleMappingId: 52274 as: 'RACACOR1'
+drop col: RACACOR action: Drop
+rename type: manual mapping: [RACACOR1,'RACACOR']
+columnbyexample columns: ESTCIV value: CASE([ISNULL(ESTCIV),NULL(),ISMISSING([ESTCIV]),'',CASE([ESTCIV == '2', 'casado', ESTCIV == '3', 'viuvo', ESTCIV == '4', 'separado', ESTCIV == '5', 'uniao estavel', ESTCIV == '9', 'ignorado', 'solteiro'])]) exampleMappingId: 52275 as: 'ESTCIV1'
+drop col: ESTCIV action: Drop
+rename type: manual mapping: [ESTCIV1,'ESTCIV']
+columnbyexample columns: ESC value: CASE([ISNULL(ESC),NULL(),ISMISSING([ESC]),'',CASE([ESC == '2', 'de 1 a 3 anos', ESC == '3', 'de 4 a 7 anos', ESC == '4', 'de 8 a 11 anos', ESC == '5', '12 anos e mais', ESC == '9', 'ignorado', 'nenhuma'])]) exampleMappingId: 52276 as: 'ESC1'
+drop col: ESC action: Drop
+rename type: manual mapping: [ESC1,'ESC']
+columnbyexample columns: ESC2010 value: CASE([ISNULL(ESC2010),NULL(),ISMISSING([ESC2010]),'',CASE([ESC2010 == '1', 'fundamental I (1ª a 4ª série)', ESC2010 == '2', 'fundamental II (5ª a 8ª série)', ESC2010 == '3', 'médio (antigo 2º grau)', ESC2010 == '4', 'superior incompleto', ESC2010 == '5', 'superior completo', ESC2010 == '9', 'ignorado', 'sem escolaridade'])]) exampleMappingId: 52277 as: 'ESC1'
+drop col: ESC2010 action: Drop
+rename type: manual mapping: [ESC1,'ESC2010']
+columnbyexample columns: ASSISTMED value: CASE([ISNULL(ASSISTMED),NULL(),ISMISSING([ASSISTMED]),'',CASE([ASSISTMED == '1','sim',ASSISTMED == '2','não','ignorado'])]) exampleMappingId: 52278 as: 'ASSISTMED1'
+drop col: ASSISTMED action: Drop
+rename type: manual mapping: [ASSISTMED1,'ASSISTMED']
+columnbyexample columns: DTATESTADO value: CASE([ISNULL(DTATESTADO),NULL(),ISMISSING([DTATESTADO]),'',MERGE([SUBSTRING(DTATESTADO, 0, FINDNTH(DTATESTADO, /[0-9]/, 3, left, false)),'-',SUBSTRING(DTATESTADO, LEN(DTATESTADO) - LEN(SUBSTITUTE(SUBSTRING(DTATESTADO, FINDNTH(DTATESTADO, /[A-Za-z0-9]/, 7, right, false), LEN(DTATESTADO)), /[A-Za-z0-9]/, '', false, /^/)), FINDNTH(DTATESTADO, /[A-Za-z0-9]/, 5, left, false)),'-',SUBSTRING(DTATESTADO, LEN(DTATESTADO) - LEN(SUBSTITUTE(SUBSTRING(DTATESTADO, FINDNTH(DTATESTADO, /[A-Za-z0-9]/, 4, left, false), LEN(DTATESTADO)), /[A-Za-z0-9]/, '', false, /^/)), LEN(DTATESTADO))])]) exampleMappingId: 52279 as: 'DTATESTADO1'
+drop col: DTATESTADO action: Drop
+rename type: manual mapping: [DTATESTADO1,'DTATESTADO']
+dateformat col: DTATESTADO type: slashdate
+columnbyexample columns: CIRCOBITO value: CASE([ISNULL(CIRCOBITO),NULL(),ISMISSING([CIRCOBITO]),'',CASE([CIRCOBITO == '2', 'suicídio', CIRCOBITO == '3', 'homicídio', CIRCOBITO == '4', 'outros', CIRCOBITO == '9', 'ignorado', 'acidente'])]) exampleMappingId: 52280 as: 'CIRCOBITO1'
+drop col: CIRCOBITO action: Drop
+rename type: manual mapping: [CIRCOBITO1,'CIRCOBITO']
+columnbyexample columns: FONTE value: CASE([ISNULL(FONTE),NULL(),ISMISSING([FONTE]),'',CASE([FONTE == '2', 'hospital', FONTE == '3', 'família', FONTE == '4', 'outra', FONTE == '9', 'ignorado', 'ocorrência policial'])]) exampleMappingId: 52281 as: 'FONTE1'
+drop col: FONTE action: Drop
+rename type: manual mapping: [FONTE1,'FONTE']
+drop col: DTINVESTIG action: Drop
+drop col: VERSAOSIST action: Drop
+drop col: TPOBITOCOR action: Drop
+drop col: NUDIASOBCO action: Drop
+drop col: DIFDATA action: Drop
+drop col: NUDIASOBIN action: Drop
+drop col: DTCADINV action: Drop
+drop col: DTCONINV action: Drop
+drop col: ALTCAUSA, FONTESINF, DTCONCASO, MORTEPARTO, DTCADINF, NUDIASINF, TPNIVELINV, TPRESGINFO action: Drop
+drop col: FONTES action: Drop
+drop col: STDOEPIDEM,STDONOVA action: Drop
+drop col: CAUSAMAT action: Drop
+drop col: ESCMAEAGR1 action: Drop
+columnbyexample columns: ESCFALAGR1 value: CASE([ISNULL(ESCFALAGR1),NULL(),ISMISSING([ESCFALAGR1]),'',CASE([ESCFALAGR1 == '01', 'fundamental I incompleto', ESCFALAGR1 == '02', 'fundamental I completo', ESCFALAGR1 == '03', 'fundamental II incompleto', ESCFALAGR1 == '04', 'fundamental II completo', ESCFALAGR1 == '06', 'ensino médio completo', ESCFALAGR1 == '08', 'superior completo', ESCFALAGR1 == '09', 'ignorado', ESCFALAGR1 == '10', 'fundamental I incompleto', ESCFALAGR1 == '11', 'fundamental II incompleto', ESCFALAGR1 == '12', 'ensino médio incompleto', 'sem escolaridade'])]) exampleMappingId: 52282 as: 'ESCFALAGR2'
+drop col: ESCFALAGR1 action: Drop
+rename type: manual mapping: [ESCFALAGR2,'ESCFALAGR1']
+drop col: DTRECORIGA action: Drop
+drop col: DTRECEBIM action: Drop
+drop col: VERSAOSCB action: Drop
+drop col: STCODIFICA action: Drop
+drop col: DTCADASTRO,ATESTANTE,CODIFICADO,FONTEINV action: Drop
+drop col: NUMEROLOTE action: Drop
+drop col: ATESTADO action: Drop
+drop col: CB_PRE action: Drop
+drop col: LINHAA,LINHAB,LINHAC,LINHAD,LINHAII action: Drop
+columnbyexample columns: CIRURGIA value: CASE([ISNULL(CIRURGIA),NULL(),ISMISSING([CIRURGIA]),'',CASE([CIRURGIA == '1','sim',CIRURGIA == '2','não','ignorado'])]) exampleMappingId: 52284 as: 'CIRURGIA1'
+drop col: CIRURGIA action: Drop
+rename type: manual mapping: [CIRURGIA1,'CIRURGIA']
+drop col: CIRURGIA action: Drop
+columnbyexample columns: NECROPSIA value: CASE([ISNULL(NECROPSIA),NULL(),ISMISSING([NECROPSIA]),'',CASE([NECROPSIA == '1','sim',NECROPSIA == '2','não','ignorado'])]) exampleMappingId: 52286 as: 'NECROPSIA1'
+drop col: NECROPSIA action: Drop
+rename type: manual mapping: [NECROPSIA1,'NECROPSIA']
+drop col: EXAME action: Drop
+drop col: ESTABDESCR action: Drop
+drop col: CODESTAB action: Drop
+columnbyexample columns: LOCOCOR value: CASE([ISNULL(LOCOCOR),NULL(),ISMISSING([LOCOCOR]),'',CASE([LOCOCOR == '1', 'hospital', LOCOCOR == '2', 'outros estab. de saúde', LOCOCOR == '3', 'domicílio', LOCOCOR == '4', 'via pública', LOCOCOR == '5', 'outros', LOCOCOR == '9', 'ignorado', NULL()])]) exampleMappingId: 52288 as: 'LOCOCOR1'
+drop col: LOCOCOR action: Drop
+rename type: manual mapping: [LOCOCOR1,'LOCOCOR']
+replacemissing col: HORAOBITO with: fill text: '' orderType: source
+replacemissing col: SEXO with: custom text: 'ignorado'
+replacemissing col: RACACOR with: custom text: 'ignorado'
+replacemissing col: ESTCIV with: custom text: 'ignorado'
+replacemissing col: ESC with: custom text: 'ignorado'
+replacemissing col: ESC2010 with: custom text: 'ignorado'
+replacemissing col: LOCOCOR with: custom text: 'ignorado'
+replacemissing col: FONTE with: custom text: 'ignorado'
+replacemissing col: ESCFALAGR1 with: custom text: 'ignorado'
+replacemissing col: DTOBITO with: fill text: '' orderType: source
+replacemissing col: DTNASC with: fill text: '' orderType: source
+join with: tabela_ocupacoes.csv col: OCUP = current_dataset.OCUP, DTOBITO = current_dataset.DTOBITO, HORAOBITO = current_dataset.HORAOBITO, NATURAL = current_dataset.NATURAL, CODMUNNATU = current_dataset.CODMUNNATU, DTNASC = current_dataset.DTNASC, IDADE = current_dataset.IDADE, SEXO = current_dataset.SEXO, RACACOR = current_dataset.RACACOR, ESTCIV = current_dataset.ESTCIV, ESC = current_dataset.ESC, ESC2010 = current_dataset.ESC2010, SERIESCFAL = current_dataset.SERIESCFAL, CODMUNRES = current_dataset.CODMUNRES, LOCOCOR = current_dataset.LOCOCOR, CODMUNOCOR = current_dataset.CODMUNOCOR, CODUFOCOR = current_dataset.CODUFOCOR, ASSISTMED = current_dataset.ASSISTMED, NECROPSIA = current_dataset.NECROPSIA, CAUSABAS = current_dataset.CAUSABAS, COMUNSVOIM = current_dataset.COMUNSVOIM, DTATESTADO = current_dataset.DTATESTADO, CIRCOBITO = current_dataset.CIRCOBITO, FONTE = current_dataset.FONTE, TPPOS = current_dataset.TPPOS, CAUSABAS_O = current_dataset.CAUSABAS_O, ESCFALAGR1 = current_dataset.ESCFALAGR1, CONTADOR = current_dataset.CONTADOR, TITULO = tabela_ocupacoes.csv.TITULO row: current_dataset.OCUP == tabela_ocupacoes.csv.CODIGO type: left
+rename type: manual mapping: [TITULO,'TITULO_OCUPACAO']
+replacemissing col: TITULO_OCUPACAO with: custom text: 'ignorado'
+join with: tabela_cid10 col: CAUSABAS = current_dataset.CAUSABAS, OCUP = current_dataset.OCUP, DTOBITO = current_dataset.DTOBITO, HORAOBITO = current_dataset.HORAOBITO, NATURAL = current_dataset.NATURAL, CODMUNNATU = current_dataset.CODMUNNATU, DTNASC = current_dataset.DTNASC, IDADE = current_dataset.IDADE, SEXO = current_dataset.SEXO, RACACOR = current_dataset.RACACOR, ESTCIV = current_dataset.ESTCIV, ESC = current_dataset.ESC, ESC2010 = current_dataset.ESC2010, SERIESCFAL = current_dataset.SERIESCFAL, CODMUNRES = current_dataset.CODMUNRES, LOCOCOR = current_dataset.LOCOCOR, CODMUNOCOR = current_dataset.CODMUNOCOR, CODUFOCOR = current_dataset.CODUFOCOR, ASSISTMED = current_dataset.ASSISTMED, NECROPSIA = current_dataset.NECROPSIA, COMUNSVOIM = current_dataset.COMUNSVOIM, DTATESTADO = current_dataset.DTATESTADO, CIRCOBITO = current_dataset.CIRCOBITO, FONTE = current_dataset.FONTE, TPPOS = current_dataset.TPPOS, CAUSABAS_O = current_dataset.CAUSABAS_O, ESCFALAGR1 = current_dataset.ESCFALAGR1, CONTADOR = current_dataset.CONTADOR, TITULO_OCUPACAO = current_dataset.TITULO_OCUPACAO, DESCRICAO = tabela_cid10.DESCRICAO row: current_dataset.CAUSABAS == tabela_cid10.SUBCAT type: left
+join with: ibge_codigo_UF.csv col: CODUFOCOR = current_dataset.CODUFOCOR, CAUSABAS = current_dataset.CAUSABAS, OCUP = current_dataset.OCUP, DTOBITO = current_dataset.DTOBITO, HORAOBITO = current_dataset.HORAOBITO, NATURAL = current_dataset.NATURAL, CODMUNNATU = current_dataset.CODMUNNATU, DTNASC = current_dataset.DTNASC, IDADE = current_dataset.IDADE, SEXO = current_dataset.SEXO, RACACOR = current_dataset.RACACOR, ESTCIV = current_dataset.ESTCIV, ESC = current_dataset.ESC, ESC2010 = current_dataset.ESC2010, SERIESCFAL = current_dataset.SERIESCFAL, CODMUNRES = current_dataset.CODMUNRES, LOCOCOR = current_dataset.LOCOCOR, CODMUNOCOR = current_dataset.CODMUNOCOR, ASSISTMED = current_dataset.ASSISTMED, NECROPSIA = current_dataset.NECROPSIA, COMUNSVOIM = current_dataset.COMUNSVOIM, DTATESTADO = current_dataset.DTATESTADO, CIRCOBITO = current_dataset.CIRCOBITO, FONTE = current_dataset.FONTE, TPPOS = current_dataset.TPPOS, CAUSABAS_O = current_dataset.CAUSABAS_O, ESCFALAGR1 = current_dataset.ESCFALAGR1, CONTADOR = current_dataset.CONTADOR, TITULO_OCUPACAO = current_dataset.TITULO_OCUPACAO, DESCRICAO = current_dataset.DESCRICAO, Nome_UF = ibge_codigo_UF.csv.Nome_UF row: current_dataset.CODUFOCOR == ibge_codigo_UF.csv.UF type: left
+rename type: manual mapping: [DESCRICAO,'CID10']
+rename type: manual mapping: [Nome_UF,'UFOCOR']
